@@ -46,14 +46,16 @@ import java.util.Date;
 @TeleOp(name="TeleOp", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
 public class BaseCode extends OpMode
 {
-    private DcMotor motor1 = null;
-    private DcMotor motor2 = null;
+    private DcMotor motor1;
+    private DcMotor motor2;
+    private Servo servo1;
     @Override
     public void init() {
         motor1 = hardwareMap.dcMotor.get("motor1");
         motor1.setDirection(DcMotor.Direction.FORWARD);
         motor2 = hardwareMap.dcMotor.get("motor2");
         motor2.setDirection(DcMotor.Direction.FORWARD);
+        servo1 = hardwareMap.servo
     }/*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
@@ -71,7 +73,7 @@ public class BaseCode extends OpMode
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
-    @Override
+    @Override test
     public void loop() {
         motor1.setPower(gamepad1.left_stick_y);
         motor2.setPower(-gamepad1.left_stick_y);
