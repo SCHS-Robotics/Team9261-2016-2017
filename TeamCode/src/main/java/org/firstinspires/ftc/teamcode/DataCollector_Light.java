@@ -12,11 +12,13 @@ public class DataCollector_Light extends OpMode {
 
     private ColorSensor left_color;
     private ColorSensor right_color;
+    private ColorSensor line_sensor;
 
     public void init() {
 
         left_color = hardwareMap.colorSensor.get("left_color");
         right_color = hardwareMap.colorSensor.get("right_color");
+        line_sensor = hardwareMap.colorSensor.get("line");
     }
 
     public void init_loop() {
@@ -33,6 +35,7 @@ public class DataCollector_Light extends OpMode {
         telemetry.addData("left color blue", left_color.blue());
         telemetry.addData("right color red", right_color.red());
         telemetry.addData("right color blue", right_color.blue());
+        telemetry.addData("line sensor light", line_sensor.alpha());
 
     }
 
