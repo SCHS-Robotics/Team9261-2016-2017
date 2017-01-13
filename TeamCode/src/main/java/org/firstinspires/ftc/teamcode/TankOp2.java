@@ -47,8 +47,7 @@
             motor6.setDirection(DcMotor.Direction.FORWARD);
             servo1 = hardwareMap.servo.get("servo1");
             directionState = 1;
-            speed = 0.75;
-
+            speed = 1;
         }/*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
@@ -93,10 +92,10 @@
             if(gamepad1.right_bumper) {
                 if(delay == 0) {
                     delay = 10;
-                    if (speed == 0.73) {
-                        speed = 0.4;
-                    } else {
+                    if (speed == 1) {
                         speed = 0.75;
+                    } else {
+                        speed = 1;
                     }
                 }
                 else{
@@ -112,7 +111,7 @@
             motor5.setPower(-gamepad2.right_trigger);
             motor4.setPower(-gamepad2.right_stick_y);
             motor3.setPower(gamepad2.left_stick_y * 0.8);
-            motor1.setPower(gamepad1.left_stick_y * speed);
+            motor1.setPower(-gamepad1.left_stick_y * speed);
             motor2.setPower(-gamepad1.right_stick_y * speed);
             motor6.setPower(-gamepad2.left_trigger);
         }
