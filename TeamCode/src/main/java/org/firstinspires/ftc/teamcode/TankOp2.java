@@ -110,8 +110,8 @@
             }
             motor5.setPower(-gamepad2.right_trigger);
             motor4.setPower(-gamepad2.right_stick_y);
-            motor3.setPower(gamepad2.left_stick_y * 0.8);
-            motor1.setPower(-gamepad1.left_stick_y * speed);
+            motor3.setPower(-gamepad2.left_stick_y * 0.8);
+            motor1.setPower(gamepad1.left_stick_y * speed);
             motor2.setPower(-gamepad1.right_stick_y * speed);
             motor6.setPower(-gamepad2.left_trigger);
         }
