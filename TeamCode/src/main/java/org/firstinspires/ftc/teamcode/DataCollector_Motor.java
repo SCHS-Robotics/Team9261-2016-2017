@@ -5,9 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "DataCollector_Motor", group = "Iterative Opmode")
 public class DataCollector_Motor extends OpMode {
 
     public final String VERSION = "0.1";
+
+    //One rotation = 560; 90 degree single wheel rotation = 890; 1 tile = 373
 
     private DcMotor left_motor;
     private DcMotor right_motor;

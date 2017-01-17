@@ -16,13 +16,12 @@
     import java.text.SimpleDateFormat;
     import java.util.Date;
 
-    @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp", group = "Iterative Opmode")
     // @Autonomous(...) is the other common choice
     public class BasicRobotCode extends OpMode {
         private DcMotor motor1;
         private DcMotor motor2;
         private Servo servo1;
-        int oneRevolution = 1123;
+        int oneRevolution = 1126;
 
         @Override
         public void init() {
