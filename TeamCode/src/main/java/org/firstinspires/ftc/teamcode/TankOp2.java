@@ -8,6 +8,7 @@
     import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
     import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+    import com.qualcomm.robotcore.hardware.CRServo;
     import com.qualcomm.robotcore.hardware.DcMotor;
     import com.qualcomm.robotcore.hardware.DcMotorSimple;
     import com.qualcomm.robotcore.hardware.Servo;
@@ -24,6 +25,7 @@
         private DcMotor motor3;
         private DcMotor motor4;
         private DcMotor motor5;
+        private DcMotor motor6;
         private Servo servo1;
         private int directionState;
         private double speed;
@@ -41,8 +43,10 @@
             motor4.setDirection(DcMotor.Direction.FORWARD);
             motor5 = hardwareMap.dcMotor.get("motor5");
             motor5.setDirection(DcMotor.Direction.FORWARD);
+            motor6 = hardwareMap.dcMotor.get("motor6");
+            motor6.setDirection(DcMotor.Direction.FORWARD);
             servo1 = hardwareMap.servo.get("servo1");
-            directionState = 1;
+            directionState = -1;
             speed = 1;
 
         }/*
@@ -67,10 +71,10 @@
          */
         @Override
         public void loop() {
-            if (gamepad1.right_bumper) {
+            if (gamepad1.left_bumper) {
                 if(delay == 0) {
-                    delay = 3;
-                    directionState = directionState * -1;
+                    delay = 10;
+                    directionState = -directionState;
                     if (directionState == -1) {
                         motor1 = hardwareMap.dcMotor.get("motor2");
                         motor1.setDirection(DcMotor.Direction.FORWARD);
@@ -86,9 +90,9 @@
                     delay--;
                 }
             }
-            if(gamepad1.left_bumper) {
+            if(gamepad1.right_bumper) {
                 if(delay == 0) {
-                    delay = 5;
+                    delay = 10;
                     if (speed == 1) {
                         speed = 0.5;
                     } else {
@@ -99,14 +103,19 @@
                     delay--;
                 }
             }
+            if(gamepad2.a){
+                servo1.setPosition(-1);
+            }
+            if(gamepad2.x){
+                servo1.setPosition(1);
+            }
             motor5.setPower(-gamepad2.right_trigger);
             motor4.setPower(-gamepad2.right_stick_y);
             motor3.setPower(-gamepad2.left_stick_y * 0.8);
-            motor1.setPower(gamepad1.left_stick_y * speed);
-            motor2.setPower(-gamepad1.right_stick_y * speed);
-
+            motor1.setPower(-gamepad1.left_stick_y * speed);
+            motor2.setPower(gamepad1.right_stick_y * speed);
+            motor6.setPower(-gamepad2.left_trigger);
         }
-
 
 
 
