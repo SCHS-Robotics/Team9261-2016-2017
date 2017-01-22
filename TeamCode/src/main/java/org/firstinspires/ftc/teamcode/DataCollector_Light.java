@@ -22,6 +22,7 @@ public class DataCollector_Light extends OpMode {
     private ColorSensor color2;
 
     private OpticalDistanceSensor optical1;
+    private OpticalDistanceSensor optical2;
     public void init() {
 
         line1 = hardwareMap.colorSensor.get("line1");
@@ -31,6 +32,7 @@ public class DataCollector_Light extends OpMode {
         color2 = hardwareMap.colorSensor.get("color2");
 
         optical1 = hardwareMap.opticalDistanceSensor.get("optical1");
+        optical2 = hardwareMap.opticalDistanceSensor.get("optical2");
 
         line1.setI2cAddress(I2cAddr.create8bit(0x4c));
         line2.setI2cAddress(I2cAddr.create8bit(0x5c));
@@ -52,6 +54,7 @@ public class DataCollector_Light extends OpMode {
         color1.enableLed(false);
         color2.enableLed(false);
         optical1.enableLed(true);
+        optical2.enableLed(true);
         telemetry.addData("left line light", line1.alpha());
         telemetry.addData("right line light", line2.alpha());
 
@@ -61,6 +64,7 @@ public class DataCollector_Light extends OpMode {
         telemetry.addData("right color blue", color2.blue());
 
         telemetry.addData("optical distance", optical1.getLightDetected());
+        telemetry.addData("optical distance blue", optical2.getLightDetected());
 
 
     }

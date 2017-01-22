@@ -32,6 +32,7 @@ public class AutoInnerJustShoot extends LinearOpMode {
 
         motor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 

@@ -27,18 +27,25 @@
         private DcMotor motor5;
         private DcMotor motor6;
         private Servo servo1;
+        private Servo servo2;
         private int directionState;
         private double speed;
         private int delay;
 
         @Override
         public void init() {
+            servo1 = hardwareMap.servo.get("servo1");
+            servo2 = hardwareMap.servo.get("servo2");
+
+            servo1.setPosition(1);
+            servo2.setPosition(0);
             motor1 = hardwareMap.dcMotor.get("motor1");
             motor1.setDirection(DcMotor.Direction.FORWARD);
             motor2 = hardwareMap.dcMotor.get("motor2");
             motor2.setDirection(DcMotor.Direction.FORWARD);
             motor3 = hardwareMap.dcMotor.get("motor3");
             motor3.setDirection(DcMotor.Direction.FORWARD);
+            motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor4 = hardwareMap.dcMotor.get("motor4");
             motor4.setDirection(DcMotor.Direction.FORWARD);
             motor5 = hardwareMap.dcMotor.get("motor5");
@@ -46,7 +53,7 @@
             motor6 = hardwareMap.dcMotor.get("motor6");
             motor6.setDirection(DcMotor.Direction.FORWARD);
             servo1 = hardwareMap.servo.get("servo1");
-            directionState = -1;
+            directionState = 1;
             speed = 1;
 
         }/*

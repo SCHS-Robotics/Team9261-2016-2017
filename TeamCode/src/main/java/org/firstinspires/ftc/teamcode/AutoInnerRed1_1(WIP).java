@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.media.MediaPlayer;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -14,82 +12,63 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous
 public class AutoInnerRed1_1 extends LinearOpMode {
-    public final String VERSION = "1.5";
+    public final String VERSION = "1.6";
 
     //21 pos: 1 degree
     //280/pi pos : 1 inch
 
     private boolean dank = false;
-    MediaPlayer Vader;
+    private MediaPlayer Vader;
 
     //1st turn
     private final int M1T1 = 0;
-    private final int M2T1 = degreesToPositions(41);
+    private final int M2T1 = degreesToPositions(42);
     private final double PWRT1 = 0.5;
 
     //2nd turn
-    private final int M1T2 = 0;
-    private final int M2T2 = degreesToPositions(-37);
-    private final double PWRT2 = -0.5;
-
-    //2.5th turn
-    private final int M1T25 = 0;
-    private final int M2T25 = degreesToPositions(10);
-    private final double PWRT25 = 0.5;
-
+    private final int M1T2 = degreesToPositions(42);
+    private final int M2T2 = 0;
+    private final double PWRT2 = 0.5;
 
     //3rd turn
-    private final int M1T3 = 0;
-    private final int M2T3 = degreesToPositions(-90);
-    private final double PWRT3 = -.5;
-
-    //4th turn
-    private final int M1T4 = degreesToPositions(45);
-    private final int M2T4 = 0;
-    private final double PWRT4 = 0.25;
+    private final int M1T3 = 1;
+    private final int M2T3 = 1;
+    private final double PWRT3 = 1.0;
 
     //1st move
-    private final int PM1 = inchesToPositions(60);
+    private final int PM1 = inchesToPositions(75);
     private final double PWRM1 = 0.5;
 
     //linefollow increment
-    private int LMCNST1 = inchesToPositions(-2);
-    private int LMCNST2 = inchesToPositions(-2);
-    private double LPWR = -0.08;
-    private double LPWR2 = 0.08;
+    private int LMVAR1 = inchesToPositions(10);
+    private int LMVAR2 = inchesToPositions(10);
+    private double LPWR = 0.3;
 
     //2nd move
     private final int PM2 = (int) inchesToPositions(-10);
     private final double PWRM2 = 0.2;
 
     //3rd move
-    private final int PM3 = inchesToPositions(6);
-    private final double PWRM3 = 0.2;
+    private final int PM3 = (int) (90 / (Math.PI * 4) * 560);
+    private final double PWRM3 = -1.0;
 
     //4th move
-    private final int PM4 = inchesToPositions(27);
-    private final double PWRM4 = 0.5;
+    private final int PM4 = (int) (90 / (Math.PI * 4) * 560);
+    ;
+    private final double PWRM4 = 1.0;
 
     //5th move
-    private final int PM5 = inchesToPositions(15);
-    private final double PWRM5 = 0.7;
+    private final int PM5 = (int) (90 / (Math.PI * 4) * 560);
 
-    //6th move
-    private final int PM6 = inchesToPositions(80);
-
-    private final double PWRM6 = 0.7;
+    private final double PWRM5 = 1.0;
 
     //Beacon
     private final int PBM = 37;
     private final double PWRBM = 1.0;
 
-    private OpticalDistanceSensor optical1;
-
     //Line Sensor
-    private final int LLMIN = 20;
-    private final int LRMIN = 7;
-    private double leftLinePower = -0.1;
-    private double RightLinePower = -0.1;
+    private final int LMIN = 7;
+    private final int LMAX = 40;
 
     private DcMotor motor1; //left wheel
     private DcMotor motor2; //right wheel
@@ -116,16 +95,11 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
 
-        servo1.setPosition(1);
-        servo2.setPosition(0);
-
         color1 = hardwareMap.colorSensor.get("color1");
         color2 = hardwareMap.colorSensor.get("color2");
-        optical1 = hardwareMap.opticalDistanceSensor.get("optical1");
 
         color1.setI2cAddress(I2cAddr.create8bit(0x6c));
         color2.setI2cAddress(I2cAddr.create8bit(0x7c));
-
 
         line1 = hardwareMap.colorSensor.get("line1"); //left line sensor
         line2 = hardwareMap.colorSensor.get("line2"); //right line sensor
@@ -141,11 +115,11 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         motor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        Vader = MediaPlayer.create(hardwareMap.appContext, R.raw.bottheme);
+        Vader = MediaPlayer.create(hardwareMap.appContext, R.raw.bottheme);// this is actually fine dont bother with it
 
         waitForStart();
 
-        //Vader.start(); //Will play the Imperial March
+        Vader.start();
 
         /*pseudocode for new algorithm:
         1. shoot twice
@@ -163,42 +137,32 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         */
         //shoot(SHOOTING_POWER);
         //shoot(SHOOTING_POWER);
-        motor3.setPower(0.8); //Shooting motor
+        motor3.setPower(SHOOTING_POWER);
         sleep(1600);
-        motor3.setPower(0);  //Stop shooting
-        optical1.enableLed(true);
-        turn(M1T1, M2T1, PWRT1); //45 deg turn
+        motor3.setPower(0);
 
-        move(PM1, PWRM1);  //runs to the wall
-        move(PM3, PWRM3);
-        while(optical1.getLightDetected() < 0.06 && opModeIsActive()) {
-            motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor1.setPower(0.2);
-            motor2.setPower(0.2);
-        }
-        motor1.setPower(0);
-        motor2.setPower(0);
-        motor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turn(M1T2, M2T2, PWRT2); //turns parallel to the wall
-        while(!seesLine()); // runs until it detects a line
-        pushBeacon(); //hits beacons
-        //turn(M1T25, M2T25, PWRT25);
+        turn(M1T1, M2T1, PWRT1);
+        move(PM1, PWRM1);
+        turn(M1T2, M2T2, PWRT2);
+        while(!seesLine() && opModeIsActive()); //runs seesLine() until it returns true
+        pushBeacon();
+        Vader.stop();
+        /*
+        move(PM3,PWRM3);
+        pushBeacon();
+
         move(PM4,PWRM4);
-        while(!seesLine());
-        pushBeacon(); //hits beacons
-        move(PM5, PWRM5);
-        turn(M1T3,M2T3,PWRT3); //turns   towards cap ball
-        turn(M1T4,M2T4, PWRT4);
-        move(PM6,PWRM6); //runs into cap ball, knocks off the ball and parks
-
-        //Vader.stop();
-       // MLG360quickscopeNOSCOPEbillythekidmtndewDORITOSBasti0nMaIn(dank);
-
+        while(!seesLine()) {
+            move(PM2,PWRM2);
+        }
+        pushBeacon();
+        turn(M1T3,M2T3,PWRT3);
+        move(PM5,PWRM5);
+        MLG360quickscopeNOSCOPEbillythekidmtndewDORITOSBasti0nMaIn(dank);
+        */
     }
 
-    public void move(int addPos, double power) {
+    private void move(int addPos, double power) {
         int currentPos1 = motor1.getCurrentPosition();
         int currentPos2 = motor2.getCurrentPosition();
 
@@ -207,12 +171,14 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         motor1.setPower(power);
         motor2.setPower(power);
 
-        while (opModeIsActive() && motor1.isBusy() && motor2.isBusy());
+        while (opModeIsActive() && motor1.isBusy() && motor2.isBusy()) {
+
+        }
         motor1.setPower(0);
         motor2.setPower(0);
     }
 
-    public void shoot(double power) {
+    private void shoot(double power) {
         final int POS_INCREMENT = 1000;
         int currentPos3 = motor3.getCurrentPosition();
         motor3.setTargetPosition(currentPos3 + POS_INCREMENT);
@@ -221,28 +187,47 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         motor3.setPower(0);
     }
 
-    public void turn(int pos1, int pos2, double power) {
+    private void turn(int pos1, int pos2, double power) {
         int currentPos1 = motor1.getCurrentPosition();
         int currentPos2 = motor2.getCurrentPosition();
         motor1.setTargetPosition(pos1 + currentPos1);
         motor2.setTargetPosition(pos2 + currentPos2);
         motor1.setPower(power);
         motor2.setPower(power);
-        while (motor1.isBusy() || motor2.isBusy() && opModeIsActive());
+        while (motor1.isBusy() || motor2.isBusy() && opModeIsActive()); //delays code until motor stops running
         motor1.setPower(0);
         motor2.setPower(0);
     }
 
+    private boolean seesLine() throws InterruptedException{ //boolean function that returns if the robot sees the line
+        reverseMotors();
+        sleep(500);
+        turn(LMVAR1, LMVAR2, LPWR);
+        if (seesLineLeft() && seesLineRight()) {
+            return true;
+        }
+        else if (seesLineLeft()) {
+            LMVAR1 = 0;
+            return false;
+        }
+        else if (seesLineRight()) {
+            LMVAR2 = 0;
+            return false;
+        }
+        resetMotors();
+        sleep(600);
+        return false;
+    }
 
     private boolean seesLineLeft() {
-        return ((line1.alpha() > LLMIN));
+        return ((line1.alpha() > LMIN));
     }
 
     private boolean seesLineRight() {
-        return ((line2.alpha() > LRMIN));
+        return ((line2.alpha() > LMIN));
     }
 
-    public void pushBeacon() {
+    public void pushBeacon() throws InterruptedException{
         if(color1.red() > color2.red()|| color1.blue() < color2.blue()) {
             servo2.setPosition(1);
             sleep(500);
@@ -263,7 +248,7 @@ public class AutoInnerRed1_1 extends LinearOpMode {
         servo2.setPosition(0);
     }
 
-    public void MLG360quickscopeNOSCOPEbillythekidmtndewDORITOSBasti0nMaIn(boolean dank) {
+    private void MLG360quickscopeNOSCOPEbillythekidmtndewDORITOSBasti0nMaIn(boolean dank) {
         if(!dank) {
             motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -279,37 +264,13 @@ public class AutoInnerRed1_1 extends LinearOpMode {
     private int inchesToPositions(double inches) {
         return (int) Math.round(inches*280/Math.PI);
     }
-
-    public boolean seesLine()
-    {
-        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        motor1.setPower(leftLinePower);
-        motor2.setPower(RightLinePower);
-
-        if (motor1.getPower() == 0 && motor2.getPower() == 0) //only if both see the line
-            {
-                motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                motor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                motor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                motor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                return true;
-            }
-
-            else if (seesLineLeft()) //runs left sensor function
-            {
-                leftLinePower = 0;
-                motor1.setPower(0);
-                return false;
-            }
-
-            else if (seesLineRight()) //runs right sensor function
-            {
-                RightLinePower = 0;
-                motor2.setPower(0);
-                return false;
-            }
-        return false;
-        }
+    private void reverseMotors() {
+        motor1.setDirection(DcMotor.Direction.FORWARD);
+        motor2.setDirection(DcMotor.Direction.REVERSE);
     }
+    private void resetMotors(){
+        motor1.setDirection(DcMotor.Direction.REVERSE);
+        motor2.setDirection(DcMotor.Direction.FORWARD);
+    }
+
+}
