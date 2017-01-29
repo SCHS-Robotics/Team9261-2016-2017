@@ -143,8 +143,6 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     {
         int encoderTicks = inchesToPositions(inches);
         resetEncoders();
-        motor1.setTargetPosition(encoderTicks);
-        motor2.setTargetPosition(encoderTicks);
         waitforEncoders(encoderTicks, power);
         motor1.setPower(0);
         motor2.setPower(0);
@@ -159,8 +157,6 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         int encoderTicksleft = degreesToPositions(degreesleft);
         int encoderTicksright = degreesToPositions(degreesright);
         resetEncoders();
-        motor1.setTargetPosition(degreesleft);
-        motor2.setTargetPosition(degreesright);
         waitforEncodersTurn(encoderTicksleft, encoderTicksright, powerleft, powerright);
         motor1.setPower(0);
         motor2.setPower(0);
@@ -173,10 +169,10 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     {
         while(getFurthestEncoder() < encoderTicksleft || getFurthestEncoder() < encoderTicksright && opModeIsActive())
         {
-            if (motor1.getTargetPosition()!=0) {
+            if (encoderTicksleft!=0) {
                 motor1.setPower(powerleft * Brake(encoderTicksleft));
             }
-            else if (motor2.getTargetPosition()!=0) {
+            else if (encoderTicksright!=0) {
                 motor2.setPower(powerright * Brake(encoderTicksright));
             }
             sleep(1);
