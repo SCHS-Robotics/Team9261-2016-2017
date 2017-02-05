@@ -88,23 +88,23 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         if (motor1.getPower() == 0 && motor2.getPower() == 0) //only if both see the line
         {
             return true;
-        }
+            }
 
         else if (seesLineLeft()) //runs left sensor function
         {
             leftLinePowerBCK = 0;
             motor1.setPower(0);
             return false;
-        }
+            }
 
         else if (seesLineRight()) //runs right sensor function
         {
             RightLinePowerBCK = 0;
             motor2.setPower(0);
             return false;
-        }
+            }
         return false;
-    }
+        }
     public boolean seesLineFWD()
     {
         motor1.setPower(leftLinePowerFWD);
@@ -113,23 +113,23 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         if (motor1.getPower() == 0 && motor2.getPower() == 0) //only if both see the line
         {
             return true;
-        }
+            }
 
         else if (seesLineLeft()) //runs left sensor function
         {
             leftLinePowerFWD = 0;
             motor1.setPower(0);
             return false;
-        }
+            }
 
         else if (seesLineRight()) //runs right sensor function
         {
             RightLinePowerFWD = 0;
             motor2.setPower(0);
             return false;
-        }
+            }
         return false;
-    }
+        }
 
     public void resetEncoders()
     {
@@ -143,8 +143,6 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     {
         int encoderTicks = inchesToPositions(inches);
         resetEncoders();
-        motor1.setTargetPosition(encoderTicks);
-        motor2.setTargetPosition(encoderTicks);
         waitforEncoders(encoderTicks, power);
         motor1.setPower(0);
         motor2.setPower(0);
@@ -198,8 +196,5 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     private double Brake(double encoderTicks){
         return Range.clip(Math.cbrt(Math.abs(getFurthestEncoder() - encoderTicks)/ encoderTicks), 0.2, 1);
     }
-    public void runalongWall() throws InterruptedException
-    {
 
-    }
 }

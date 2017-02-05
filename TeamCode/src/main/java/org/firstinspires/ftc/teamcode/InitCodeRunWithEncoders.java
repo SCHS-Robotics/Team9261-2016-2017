@@ -2,10 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import android.media.MediaPlayer;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
@@ -44,9 +48,6 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode {
     Servo servo1; //left button pusher
     Servo servo2; //right button pusher
 
-    /*UltrasonicSensor ultra1;
-    UltrasonicSensor ultra2;
-*/
     public void initSound()
     {
         Vader = MediaPlayer.create(hardwareMap.appContext, R.raw.bottheme);
@@ -72,7 +73,6 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode {
 
     public void initSensors()
     {
-
 
         color1 = hardwareMap.colorSensor.get("color1");
         color2 = hardwareMap.colorSensor.get("color2");

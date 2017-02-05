@@ -296,6 +296,9 @@ public final int M2T25 = 0;
         motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+    public void rangeDrive(int pos, double pwr) {
+
+    }
     public void leftTiltDrive(int addPos, double power)
     {
         int currentPos1 = motor1.getCurrentPosition();
