@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "DataCollector_Light", group = "Iterative Opmode")
 public class DataCollector_Light extends OpMode {
@@ -24,6 +25,9 @@ public class DataCollector_Light extends OpMode {
     private OpticalDistanceSensor optical1;
     private OpticalDistanceSensor optical2;
 
+    private Servo wheel1;
+    private Servo wheel2;
+
     public void init() {
 
         line1 = hardwareMap.colorSensor.get("line1");
@@ -34,6 +38,9 @@ public class DataCollector_Light extends OpMode {
 
         optical1 = hardwareMap.opticalDistanceSensor.get("optical1");
         optical2 = hardwareMap.opticalDistanceSensor.get("optical2");
+
+        wheel1 = hardwareMap.servo.get("wheel1");
+        wheel2 = hardwareMap.servo.get("wheel2");
 
 
 
@@ -69,6 +76,9 @@ public class DataCollector_Light extends OpMode {
 
         telemetry.addData("optical distance", optical1.getLightDetected());
         telemetry.addData("optical distance blue", optical2.getLightDetected());
+
+        telemetry.addData("wheel1 val", wheel1.getPosition());
+        telemetry.addData("wheel2 val", wheel2.getPosition());
 
 
     }

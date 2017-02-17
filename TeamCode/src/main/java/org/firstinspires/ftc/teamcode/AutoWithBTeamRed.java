@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous
 public class AutoWithBTeamRed extends BaseAuto {
     @Override
-    public void runOpMode(){
+    public void runOpMode() throws InterruptedException{
         initAll();
         waitForStart();
         Vader.start();
