@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Created by Andrew on 1/21/2017.
  */
 
-public abstract class InitCodeRunWithEncoders extends LinearOpMode {
+public abstract class InitCodeRunWithEncoders extends LinearOpMode  {
     //Line Sensor
     final int LLMIN = 20;
     final int LRMIN = 7;
@@ -48,12 +48,15 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode {
     Servo servo1; //left button pusher
     Servo servo2; //right button pusher
 
-    public void initSound()
+    Servo wheel1;
+    Servo wheel2;
+
+    public void initSound() throws InterruptedException
     {
         Vader = MediaPlayer.create(hardwareMap.appContext, R.raw.bottheme);
     }
 
-    public void initMotors()
+    public void initMotors() throws InterruptedException
     {
         motor1 = hardwareMap.dcMotor.get("motor1");
         motor2 = hardwareMap.dcMotor.get("motor2");
@@ -71,7 +74,7 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode {
         motor2.setMaxSpeed(1120*160/60);
     }
 
-    public void initSensors()
+    public void initSensors() throws InterruptedException
     {
 
         color1 = hardwareMap.colorSensor.get("color1");
@@ -91,26 +94,27 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode {
         line2.setI2cAddress(I2cAddr.create8bit(0x5c));
     }
 
-    public void initServos()
+    public void initServos() throws InterruptedException
     {
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
 
+        wheel1 = hardwareMap.servo.get("wheel1");
+        wheel2 = hardwareMap.servo.get("wheel2");
+
         servo1.setPosition(1);
         servo2.setPosition(0);
+
+        wheel1.setPosition(0.4);
+        wheel2.setPosition(1);
+
     }
 
-   /* public void initUltra(){
-        ultra1 = hardwareMap.ultrasonicSensor.get("ultra1");
-        ultra2 = hardwareMap.ultrasonicSensor.get("ultra2");
-    }
-*/
-    public void initAll()
+    public void initAll() throws InterruptedException
     {
         initMotors();
         initServos();
         initSensors();
         initSound();
-        //initUltra();
     }
 }

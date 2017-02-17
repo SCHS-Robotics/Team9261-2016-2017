@@ -45,12 +45,12 @@ public abstract class InitCode extends LinearOpMode {
 
     //UltrasonicSensor ultra1;
 
-    public void initSound()
+    public void initSound() throws InterruptedException
     {
         Vader = MediaPlayer.create(hardwareMap.appContext, R.raw.bottheme);
     }
 
-    public void initMotors()
+    public void initMotors() throws InterruptedException
     {
         motor1 = hardwareMap.dcMotor.get("motor1");
         motor2 = hardwareMap.dcMotor.get("motor2");
@@ -65,7 +65,7 @@ public abstract class InitCode extends LinearOpMode {
         motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void initSensors()
+    public void initSensors() throws InterruptedException
     {
 
 
@@ -86,7 +86,7 @@ public abstract class InitCode extends LinearOpMode {
         line2.setI2cAddress(I2cAddr.create8bit(0x5c));
     }
 
-    public void initServos()
+    public void initServos() throws InterruptedException
     {
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
@@ -99,13 +99,12 @@ public abstract class InitCode extends LinearOpMode {
         //ultra1 = hardwareMap.ultrasonicSensor.get("ultra1");
     }
 
-    public void initAll()
+    public void initAll() throws InterruptedException
     {
         initMotors();
         initServos();
         initSensors();
         initSound();
-        initUltra();
     }
 
 }
