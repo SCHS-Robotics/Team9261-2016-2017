@@ -13,31 +13,33 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     //21 pos: 1 degree
     //280/pi pos : 1 inch
 
-    private boolean seesLineLeft() {
+    private boolean seesLineLeft() throws InterruptedException{
+        sleep(0);
         return ((line1.alpha() > LLMIN));
     }
 
-    private boolean seesLineRight() {
+    private boolean seesLineRight() throws InterruptedException{
+        sleep(0);
         return ((line2.alpha() > LRMIN));
     }
 
     public void pushBeaconRed() throws InterruptedException{
         if(color1.red() > color2.red()|| color1.blue() < color2.blue()) {
             servo2.setPosition(1);
-            sleep(500);
+            sleep(750);
             servo2.setPosition(0);
-            sleep(500);
+            sleep(750);
             servo2.setPosition(1);
         }
 
         else if (color1.red() < color2.red() || color2.blue() < color1.blue()) {
             servo1.setPosition(0);
-            sleep(500);
+            sleep(750);
             servo1.setPosition(1);
-            sleep(500);
+            sleep(750);
             servo1.setPosition(0);
         }
-        sleep(500);
+        sleep(750);
         servo1.setPosition(1);
         servo2.setPosition(0);
     }
@@ -80,7 +82,7 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         return (int) Math.round(inches*280/Math.PI);
     }
 
-    public boolean seesLineBCK()
+    public boolean seesLineBCK() throws InterruptedException
     {
         motor1.setPower(leftLinePowerBCK);
         motor2.setPower(RightLinePowerBCK);
@@ -105,7 +107,7 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
             }
         return false;
         }
-    public boolean seesLineFWD()
+    public boolean seesLineFWD() throws InterruptedException
     {
         motor1.setPower(leftLinePowerFWD);
         motor2.setPower(RightLinePowerFWD);
@@ -196,5 +198,8 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
     private double Brake(double encoderTicks){
         return Range.clip(Math.cbrt(Math.abs(getFurthestEncoder() - encoderTicks)/ encoderTicks), 0.2, 1);
     }
-
+    public void resetWheels(){
+        wheel1.setPosition(0.4);
+        wheel2.setPosition(1);
+    }
 }

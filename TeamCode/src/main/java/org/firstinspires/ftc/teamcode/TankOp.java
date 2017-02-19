@@ -30,11 +30,14 @@ public class TankOp extends OpMode {
         private DcMotor motor4;
         private DcMotor motor5;
         private DcMotor motor6;
+        private DcMotor motor7;
+        private DcMotor motor8;
         private Servo servo1;
         private Servo servo2;
         private int directionState;
         private double speed;
-        private int delay;
+        private int directionDelay;
+        private int speedDelay;
         MediaPlayer airhorn;
         MediaPlayer alone;
 
@@ -59,13 +62,19 @@ public class TankOp extends OpMode {
             motor5.setDirection(DcMotor.Direction.FORWARD);
             motor6 = hardwareMap.dcMotor.get("motor6");
             motor6.setDirection(DcMotor.Direction.FORWARD);
+            motor7 = hardwareMap.dcMotor.get("motor7");
+            motor7.setDirection(DcMotor.Direction.FORWARD);
+            motor8 = hardwareMap.dcMotor.get("motor8");
+            motor8.setDirection(DcMotor.Direction.FORWARD);
 
-            airhorn = MediaPlayer.create(hardwareMap.appContext, R.raw.airhorn);
-            alone = MediaPlayer.create(hardwareMap.appContext, R.raw.alone);
+
+            //airhorn = MediaPlayer.create(hardwareMap.appContext, R.raw.airhorn);
+            //alone = MediaPlayer.create(hardwareMap.appContext, R.raw.alone);
 
             directionState = -1;
             speed = 1;
-            delay = 0;
+            directionDelay = 0;
+            speedDelay = 0;
         }
 
     /*
@@ -86,40 +95,25 @@ public class TankOp extends OpMode {
         @Override
         public void loop() {
             if (gamepad1.left_bumper) {
-                if(delay == 0) {
-                    delay = 10;
+                if(directionDelay == 0) {
+                    directionDelay = 10;
                     directionState = -directionState;
-                    if (directionState == -1) {
-                        motor1 = hardwareMap.dcMotor.get("motor2");
-                        motor1.setDirection(DcMotor.Direction.FORWARD);
-                        motor2 = hardwareMap.dcMotor.get("motor1");
-                        motor2.setDirection(DcMotor.Direction.FORWARD);
-                    } else {
-                        motor1 = hardwareMap.dcMotor.get("motor1");
-                        motor1.setDirection(DcMotor.Direction.FORWARD);
-                        motor2 = hardwareMap.dcMotor.get("motor2");
-                        motor2.setDirection(DcMotor.Direction.FORWARD);
-                    }
-                }else{
-                    delay--;
+                    setMotors();
                 }
             }else{
-                delay = 0;
+                directionDelay = 0;
             }
             if(gamepad1.right_bumper) {
-                if(delay == 0) {
-                    delay = 10;
+                if(speedDelay == 0) {
+                    speedDelay = 10;
                     if (speed == 1) {
                         speed = 0.5;
                     } else {
                         speed = 1;
                     }
                 }
-                else{
-                    delay--;
-                }
             }else{
-                delay = 0;
+                speedDelay = 0;
             }
             /*
             if(gamepad1.x || gamepad2.x){
@@ -135,6 +129,8 @@ public class TankOp extends OpMode {
             motor1.setPower(-gamepad1.left_stick_y * speed);
             motor2.setPower(gamepad1.right_stick_y * speed);
             motor6.setPower(-gamepad2.left_trigger);
+            motor7.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+            motor8.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
         }
 
         /*
@@ -142,4 +138,18 @@ public class TankOp extends OpMode {
          */
         @Override
         public void stop() {}
+
+        private void setMotors() {
+            if (directionState == -1) {
+                motor1 = hardwareMap.dcMotor.get("motor2");
+                motor1.setDirection(DcMotor.Direction.FORWARD);
+                motor2 = hardwareMap.dcMotor.get("motor1");
+                motor2.setDirection(DcMotor.Direction.FORWARD);
+            } else {
+                motor1 = hardwareMap.dcMotor.get("motor1");
+                motor1.setDirection(DcMotor.Direction.FORWARD);
+                motor2 = hardwareMap.dcMotor.get("motor2");
+                motor2.setDirection(DcMotor.Direction.FORWARD);
+            }
+        }
     }

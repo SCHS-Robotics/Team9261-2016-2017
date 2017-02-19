@@ -72,8 +72,8 @@ public class TankOpTest extends OpMode {
             }
             motors[1];
              */
-            airhorn = MediaPlayer.create(hardwareMap.appContext, R.raw.airhorn);
-            alone = MediaPlayer.create(hardwareMap.appContext, R.raw.alone);
+            //airhorn = MediaPlayer.create(hardwareMap.appContext, R.raw.airhorn);
+            //alone = MediaPlayer.create(hardwareMap.appContext, R.raw.alone);
 
             directionState = -1;
             speed = 1;
