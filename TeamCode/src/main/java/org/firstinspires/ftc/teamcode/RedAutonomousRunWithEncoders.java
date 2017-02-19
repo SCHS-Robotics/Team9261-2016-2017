@@ -16,16 +16,16 @@ public class RedAutonomousRunWithEncoders extends BaseAutoRunWithEncoders {
         sleep(1600);
         motor3.setPower(0);  //Stop shooting
         sleep(500);
-        optical1.enableLed(true);
+        //optical1.enableLed(true);
         turnForward(0, 42, 0, 0.9); //45 deg turn
         sleep(500);
         driveForward(66, 0.9);  //runs to the wall
 
         sleep(500);
-        while(optical1.getLightDetected() <= 0.012 && opModeIsActive()) {
+        /*while(optical1.getLightDetected() <= 0.012 && opModeIsActive()) {
             motor1.setPower(0.2);
             motor2.setPower(0.2);
-        }
+        }*/
         motor1.setPower(0);
         motor2.setPower(0);
         sleep(500);

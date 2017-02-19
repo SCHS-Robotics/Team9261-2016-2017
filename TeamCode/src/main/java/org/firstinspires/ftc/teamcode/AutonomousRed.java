@@ -21,7 +21,7 @@ public class AutonomousRed extends BaseAutoRunWithEncoders {
         sleep(500);
         turnForward(0, 42, 0, 0.9); //45 deg turn
         sleep(500);
-        driveForward(66, 0.9);  //runs to the wall
+        driveForward(61, 0.9);  //runs to the wall
         sleep(500);
         /*while(optical1.getLightDetected() <= 0.012 && opModeIsActive()) {
             motor1.setPower(0.2);
@@ -31,28 +31,31 @@ public class AutonomousRed extends BaseAutoRunWithEncoders {
         motor2.setPower(0);
         */
         sleep(500);
-        turnBackward(0, 20, 0, 0.9); //turns parallel to the wall
+        turnBackward(0, 22, 0, 0.9); //turns parallel to the wall
         sleep(500);
-        driveForward(6,0.5);
-        leftLinePowerFWD = 0.2;
-        RightLinePowerFWD = 0.2;
+        driveForward(10,0.5);
+        leftLinePowerFWD = 0.4;
+        RightLinePowerFWD = 0.4;
         while(!seesLineFWD() && opModeIsActive());
         sleep(500);
         pushBeaconRed(); //hits beacons
-        turnBackward(0, 15, 0, 0.5);
+        //turnBackward(0, 15, 0, 0.5);
         driveBackward(28, 0.5); //IF THE || CHANGE WE MADE WORKS CHANGE THIS BACK TO REGULAR MOVE
         resetEncoders();
-        leftLinePowerBCK = -0.2;
-        RightLinePowerBCK = -0.2;
+        leftLinePowerBCK = -0.4;
+        RightLinePowerBCK = -0.4;
         sleep(500);
         while(!seesLineBCK() && opModeIsActive());
         sleep(500);
         pushBeaconRed(); //hits beacons
-        driveForward(15, 0.9);
+        resetWheels();
+        turnForward(0,45,0,0.5);
+        turnBackward(45, 0, 0.5, 0);
         sleep(500);
-        turnBackward(45, 0, 0.9 , 0); //turns   towards cap ball
+        driveBackward(42, 0.8);
         sleep(500);
-        driveBackward(75, 0.9); //runs into cap ball, knocks off the ball and parks
+        turnBackward(0,45, 0, 0.8);
+        sleep(500);
         Vader.stop();
     }
 }

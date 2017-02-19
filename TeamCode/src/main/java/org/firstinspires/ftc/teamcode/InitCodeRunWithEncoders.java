@@ -42,8 +42,8 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode  {
     ColorSensor line1; //left line sensor
     ColorSensor line2; //right line sensor
 
-    OpticalDistanceSensor optical1;
-    OpticalDistanceSensor optical2;
+    //OpticalDistanceSensor optical1;
+    //OpticalDistanceSensor optical2;
 
     Servo servo1; //left button pusher
     Servo servo2; //right button pusher
@@ -80,8 +80,8 @@ public abstract class InitCodeRunWithEncoders extends LinearOpMode  {
         color1 = hardwareMap.colorSensor.get("color1");
         color2 = hardwareMap.colorSensor.get("color2");
 
-        optical1 = hardwareMap.opticalDistanceSensor.get("optical1");
-        optical2 = hardwareMap.opticalDistanceSensor.get("optical2");
+        //optical1 = hardwareMap.opticalDistanceSensor.get("optical1");
+        //optical2 = hardwareMap.opticalDistanceSensor.get("optical2");
 
         color1.setI2cAddress(I2cAddr.create8bit(0x6c));
         color2.setI2cAddress(I2cAddr.create8bit(0x7c));

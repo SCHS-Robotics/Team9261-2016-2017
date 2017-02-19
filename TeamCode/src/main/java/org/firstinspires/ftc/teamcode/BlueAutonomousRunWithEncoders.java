@@ -16,17 +16,17 @@ public class BlueAutonomousRunWithEncoders extends BaseAutoRunWithEncoders {
         motor3.setPower(0.8); // shooter start
         sleep(1600);
         motor3.setPower(0); // shooter stop
-        optical2.enableLed(true);
+        //optical2.enableLed(true);
         driveForward(18, 0.5);// forwards 18 inches, at 0.5 of max power initially
         sleep(500);
         turnBackward(135, 0, 0.9, 0); //left wheel backwards pivot 160 degrees, at an initial speed of 0.5
         sleep(500);
         driveBackward(55, 0.9); // backwards 55 inches, at 0.5 of max power initially
         sleep(500);
-        while(optical2.getLightDetected() < 0.09 && opModeIsActive()) { // remember to change to optical2 when is mounted
+        /*while(optical2.getLightDetected() < 0.09 && opModeIsActive()) { // remember to change to optical2 when is mounted
             motor1.setPower(-0.2);
             motor2.setPower(-0.2);
-        }
+        }*/
         motor1.setPower(0);
         motor2.setPower(0);
         sleep(500);
