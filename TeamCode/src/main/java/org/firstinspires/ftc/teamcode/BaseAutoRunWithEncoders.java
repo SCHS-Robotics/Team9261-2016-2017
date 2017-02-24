@@ -39,7 +39,7 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
             sleep(750);
             servo1.setPosition(0);
         }
-        sleep(750);
+        sleep(250);
         servo1.setPosition(1);
         servo2.setPosition(0);
     }
@@ -60,7 +60,7 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
             sleep(500);
             servo1.setPosition(0);
         }
-        sleep(500);
+        sleep(250);
         servo1.setPosition(1);
         servo2.setPosition(0);
     }
@@ -96,15 +96,18 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         {
             leftLinePowerBCK = 0;
             motor1.setPower(0);
-            return false;
-            }
 
-        else if (seesLineRight()) //runs right sensor function
-        {
             RightLinePowerBCK = 0;
             motor2.setPower(0);
             return false;
             }
+/*
+        else if (seesLineRight()) //runs right sensor function
+        {
+
+            return false;
+            }
+            */
         return false;
         }
     public boolean seesLineFWD() throws InterruptedException
@@ -121,15 +124,18 @@ public abstract class BaseAutoRunWithEncoders extends InitCodeRunWithEncoders {
         {
             leftLinePowerFWD = 0;
             motor1.setPower(0);
-            return false;
-            }
 
-        else if (seesLineRight()) //runs right sensor function
-        {
             RightLinePowerFWD = 0;
             motor2.setPower(0);
             return false;
             }
+
+      /*  else if (seesLineRight()) //runs right sensor function
+        {
+            RightLinePowerFWD = 0;
+            motor2.setPower(0);
+            return false;
+            }*/
         return false;
         }
 
