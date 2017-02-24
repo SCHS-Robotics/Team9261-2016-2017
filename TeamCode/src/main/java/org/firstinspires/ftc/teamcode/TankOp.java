@@ -30,10 +30,14 @@ public class TankOp extends OpMode {
         private DcMotor motor4;
         private DcMotor motor5;
         private DcMotor motor6;
+    /*
         private DcMotor motor7;
         private DcMotor motor8;
+       */
         private Servo servo1;
         private Servo servo2;
+        private Servo wheel1;
+        private Servo wheel2;
         private int directionState;
         private double speed;
         private int directionDelay;
@@ -45,9 +49,13 @@ public class TankOp extends OpMode {
         public void init() {
             servo1 = hardwareMap.servo.get("servo1");
             servo2 = hardwareMap.servo.get("servo2");
+            wheel1 = hardwareMap.servo.get("wheel1");
+            wheel2 = hardwareMap.servo.get("wheel2");
 
             servo1.setPosition(1);
             servo2.setPosition(0);
+            wheel1.setPosition(0.4);
+            wheel2.setPosition(1);
 
             motor1 = hardwareMap.dcMotor.get("motor2");
             motor1.setDirection(DcMotor.Direction.FORWARD);
@@ -62,10 +70,12 @@ public class TankOp extends OpMode {
             motor5.setDirection(DcMotor.Direction.FORWARD);
             motor6 = hardwareMap.dcMotor.get("motor6");
             motor6.setDirection(DcMotor.Direction.FORWARD);
+            /*
             motor7 = hardwareMap.dcMotor.get("motor7");
             motor7.setDirection(DcMotor.Direction.FORWARD);
             motor8 = hardwareMap.dcMotor.get("motor8");
             motor8.setDirection(DcMotor.Direction.FORWARD);
+            */
 
 
             //airhorn = MediaPlayer.create(hardwareMap.appContext, R.raw.airhorn);
@@ -84,7 +94,7 @@ public class TankOp extends OpMode {
         public void init_loop() {}
 
         /*
-         * Code to run ONCE when the driver hits PLAY
+         * Code     to run ONCE when the driver hits PLAY
          */
         @Override
         public void start() {}
@@ -104,6 +114,16 @@ public class TankOp extends OpMode {
                 directionDelay = 0;
             }
             if(gamepad1.right_bumper) {
+
+
+
+
+
+
+
+
+
+
                 if(speedDelay == 0) {
                     speedDelay = 10;
                     if (speed == 1) {
@@ -129,8 +149,10 @@ public class TankOp extends OpMode {
             motor1.setPower(-gamepad1.left_stick_y * speed);
             motor2.setPower(gamepad1.right_stick_y * speed);
             motor6.setPower(-gamepad2.left_trigger);
+            /*
             motor7.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
             motor8.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+            */
         }
 
         /*
